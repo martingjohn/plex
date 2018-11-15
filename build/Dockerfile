@@ -11,11 +11,17 @@ RUN apt-get update \
             ca-certificates \
             curl \
             fuse \
+            git \
+            python \
+            python-setuptools \
+            tzdata \
             xmlstarlet \
  && echo
 
 ADD rclone_install.sh /tmp
 ADD plex_install.sh /tmp
 ADD start_up.sh /tmp
+ADD tautulli.service /tmp
+ADD tautulli_install.sh /tmp
 
 CMD ["/bin/bash"]

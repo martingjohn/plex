@@ -9,10 +9,7 @@ cd /tmp
 mkdir -p /mnt/rclone/JC
 PLEX_OPTIONS="--allow-other --read-only --stats 600s -v"
 
-rclone mount $PLEX_OPTIONS --log-file=/root/JC.log jottacloud:Plex /mnt/rclone/JC &
-#rclone mount $PLEX_OPTIONS --log-file=/root/JC_cache.log --cache-db-purge JC_cache: /mnt/rclone/JC_cache &
-#rclone mount $PLEX_OPTIONS --log-file=/root/JC_encrypt.log Encrypt_jottacloud: /mnt/rclone/E_JC &
-
+rclone mount $PLEX_OPTIONS --log-file=/tmp/JC.log --cache-db-purge JC_cache: /mnt/rclone/JC &
 
 #Plex
 
