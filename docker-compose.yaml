@@ -6,12 +6,19 @@ services:
     environment:
       - RCLONE_VERSION=latest
       - RCLONE_BETA=yes
+      - PLEX_UID=101
+      - PLEX_GID=101
+      - TAUTULLI_UID=102
+      - TAUTULLI_GID=102
     build:
       context: ./build
+    networks:
+      main_lan:
+        ipv4_address: 192.168.10.114
     image: plex
     volumes:
       - ${HOME}/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf
-      - ${HOME}/plex:/usr/lib/plexmediaserver
+      - ${HOME}/plex_data:/config
     command: sleep infinity
     privileged: true
     security_opt:
@@ -20,4 +27,9 @@ services:
       - /dev/fuse:/dev/fuse
     cap_add:
       - SYS_ADMIN
+
+networks:
+  main_lan:
+    external:
+      name: pub_net
 

@@ -4,6 +4,7 @@
 cd /tmp
 ./rclone_install.sh
 ./plex_install.sh
+./tautulli_install.sh
 
 #rclone mounts
 mkdir -p /mnt/rclone/JC
@@ -14,7 +15,6 @@ rclone mount $PLEX_OPTIONS --log-file=/tmp/JC.log --cache-db-purge JC_cache: /mn
 #Plex
 
 home="$(echo ~plex)"
-export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/usr/lib/plexmediaserver/Library/Application Support"
 export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="${PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR:-${home}/Library/Application Support}"
 export PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
 export PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
@@ -23,7 +23,9 @@ export PLEX_MEDIA_SERVER_INFO_DEVICE="Docker Container"
 export PLEX_MEDIA_SERVER_INFO_MODEL=$(uname -m) 
 export PLEX_MEDIA_SERVER_INFO_PLATFORM_VERSION=$(uname -r) 
 
-export LD_LIBRARY_PATH=${PLEX_MEDIA_SERVER_HOME}
-cd ${PLEX_MEDIA_SERVER_HOME}
-./Plex\ Media\ Server &
+sudo -H -u plex /bin/sh -c 'LD_LIBRARY_PATH=/usr/lib/plexmediaserver /usr/lib/plexmediaserver/Plex\ Media\ Server' &
+
+#Tautulli
+
+sudo -H -u tautulli /opt/Tautulli/Tautulli.py --config /etc/Tautulli/config.ini --datadir /data/Tautulli --quiet --daemon --nolaunch
 

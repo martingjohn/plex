@@ -6,10 +6,8 @@ mkdir -p /etc/Tautulli \
 
 git clone https://github.com/Tautulli/Tautulli.git /opt/Tautulli
 
-addgroup tautulli && sudo adduser --system --no-create-home tautulli --ingroup tautulli
+id tautulli || addgroup --gid $TAUTULLI_GID tautulli && adduser --uid $TAUTULLI_UID --no-create-home --system tautulli --ingroup tautulli
+
 chown -R tautulli:tautulli /opt/Tautulli
 chown -R tautulli:tautulli /etc/Tautulli
 chown -R tautulli:tautulli /data/Tautulli
-
-cp /tmp/tautulli.service /lib/systemd/system/tautulli.service
-
