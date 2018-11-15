@@ -1,0 +1,22 @@
+version: "3"
+services:
+
+  plex-rclone:
+    container_name: plex-test
+    environment:
+      - RCLONE_VERSION=latest
+      - RCLONE_BETA=yes
+    build:
+      context: ./build
+    image: plex
+    volumes:
+      - ${HOME}/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf
+    command: sleep infinity
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+    devices:
+      - /dev/fuse:/dev/fuse
+    cap_add:
+      - SYS_ADMIN
+
