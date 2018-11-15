@@ -16,5 +16,6 @@ RUN apt-get update \
 
 ADD rclone_install.sh /tmp
 ADD plex_install.sh /tmp
+ADD start_up.sh /tmp
 
 CMD ["/bin/bash"]
