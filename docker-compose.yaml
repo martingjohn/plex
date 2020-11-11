@@ -17,7 +17,7 @@ services:
     volumes:
       - ${PWD}/metadata:/config
 # Rclone config file already setup
-      - ${PWD}/rclone.conf:/root/rclone.conf
+      - ${PWD}/rclone:/root/rclone
 # Directory for rclone cache
       - ${PWD}/tmp:/tmp
     environment:
@@ -31,7 +31,7 @@ services:
 # Get plex claim token from https://www.plex.tv/claim/
       - PLEX_CLAIM=claim-xxxxxxxxxxxxxxxxxxxx
 # Rclone config as set in the volumes above
-      - RCLONE_CONFIG=/root/rclone.conf
+      - RCLONE_CONFIG=/root/rclone/rclone.conf
 # Rclone remote path
       - RCLONE_REMOTE=remote:/path
 # Rclone local mount point (will create directory if necessary)
