@@ -22,8 +22,8 @@ services:
       - ${PWD}/tmp:/tmp
     environment:
       - TZ=Europe/London
-      - PLEX_UID=112
-      - PLEX_GID=117
+#      - PLEX_UID=112
+#      - PLEX_GID=117
 # Needs the docker host ip in here (along with port if different)
       - ADVERTISE_IP=http://192.168.10.57:32400/
 # Needs the subnet in here
@@ -47,3 +47,4 @@ services:
       - RCLONE_VFS_CACHE_POLL_INTERVAL=1m
       - RCLONE_VFS_CACHE_MAX_SIZE=10g
       - RCLONE_CACHE_DIR=/tmp
+      - RCLONE_VERBOSE=1
