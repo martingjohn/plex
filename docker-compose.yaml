@@ -1,35 +1,39 @@
-version: "3"
+version: "3.8"
 services:
-
-  plex-rclone:
-    container_name: plex-test
-    environment:
-      - RCLONE_VERSION=latest
-      - RCLONE_BETA=yes
-      - PLEX_UID=101
-      - PLEX_GID=101
-      - TAUTULLI_UID=102
-      - TAUTULLI_GID=102
+  plex:
     build:
-      context: ./build
-    networks:
-      main_lan:
-        ipv4_address: 192.168.10.114
-    image: plex
-    volumes:
-      - ${HOME}/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf
-      - ${HOME}/plex_data:/config
-    command: sleep infinity
-    privileged: true
-    security_opt:
-      - seccomp:unconfined
-    devices:
-      - /dev/fuse:/dev/fuse
+      context: build
+    container_name: plex-docker
+    hostname: plex-docker
+    restart: unless-stopped
     cap_add:
       - SYS_ADMIN
-
-networks:
-  main_lan:
-    external:
-      name: pub_net
-
+    devices:
+      - /dev/fuse
+    security_opt:
+      - "apparmor:unconfined"
+    ports:
+      - 32400:32400/tcp
+    volumes:
+      - ${PWD}/metadata:/config
+# Rclone config file already setup
+      - ${PWD}/rclone.conf:/root/rclone.conf
+    environment:
+      - TZ=Europe/London
+      - PLEX_UID=112
+      - PLEX_GID=117
+# Needs the docker host ip in here (along with port if different)
+      - ADVERTISE_IP=http://192.168.10.57:32400/
+# Needs the subnet in here
+      - ALLOWED_NETWORKS=192.168.10.0/24
+# Get plex claim token from https://www.plex.tv/claim/
+      - PLEX_CLAIM=claim-xxxxxxxxxxxxxxxxxxxx
+# Rclone config as set in the volumes above
+      - RCLONE_CONFIG=/root/rclone.conf
+# Rclone remote path
+      - RCLONE_REMOTE=remote:/path
+# Rclone local mount point (will create directory if necessary)
+      - RCLONE_MOUNT=/mnt
+# Other rclone environment variables can be added here
+# allow other is hardcoded in script, so not strictly necessary here
+#      - RCLONE_ALLOW_OTHER=true

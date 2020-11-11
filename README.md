@@ -1,2 +1,2 @@
 # plex
-Plex and other useful things
+Plex with rclone mount built in
