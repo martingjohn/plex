@@ -18,6 +18,8 @@ services:
       - ${PWD}/metadata:/config
 # Rclone config file already setup
       - ${PWD}/rclone.conf:/root/rclone.conf
+# Directory for rclone cache
+      - ${PWD}/tmp:/tmp
     environment:
       - TZ=Europe/London
       - PLEX_UID=112
@@ -37,3 +39,11 @@ services:
 # Other rclone environment variables can be added here
 # allow other is hardcoded in script, so not strictly necessary here
 #      - RCLONE_ALLOW_OTHER=true
+      - RCLONE_READ_ONLY=true
+      - RCLONE_BUFFER_SIZE=50M
+      - RCLONE_FAST_LIST=true
+      - RCLONE_VFS_CACHE_MAX_AGE=3h 
+      - RCLONE_VFS_CACHE_MODE=full
+      - RCLONE_VFS_CACHE_POLL_INTERVAL=1m
+      - RCLONE_VFS_CACHE_MAX_SIZE=10g
+      - RCLONE_CACHE_DIR=/tmp
